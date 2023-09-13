@@ -26,3 +26,17 @@ class City(models.Model):
     class Meta:
         verbose_name_plural = 'Cities'
         ordering = ['name']
+
+class Currency(models.Model):
+    country = models.ForeignKey(Country,
+                                on_delete=models.PROTECT,
+                                related_name='currency_country')
+    name = models.CharField(max_length=5,
+                            verbose_name="Currency name",
+                            help_text="Enter a currency name")
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Cities'
+        ordering = ['name']
