@@ -92,7 +92,7 @@ class Room(models.Model):
                                    null=True,
                                    blank=True)
     def __str__(self):
-        return f'{self.hotel}: {self.number}'
+        return f'Hotel: {self.hotel} | Category: {self.category} | Number of seats: {self.number_of_seats} | Number: {self.number}'
 
     class Meta:
         verbose_name_plural = 'Rooms'
@@ -106,7 +106,7 @@ class RoomPhotos(models.Model):
                               blank=True,
                               null=True)
     def __str__(self):
-        return self.room
+        return f'Room: {self.room} Photo: {self.photo}'
 
     class Meta:
         verbose_name_plural = 'Photos of rooms'
