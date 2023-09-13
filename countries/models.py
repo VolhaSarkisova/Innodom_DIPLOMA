@@ -38,5 +38,5 @@ class Currency(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'Cities'
+        verbose_name_plural = 'Currencies'
         ordering = ['name']
