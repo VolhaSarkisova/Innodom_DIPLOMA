@@ -7,7 +7,7 @@ from hotels.models import Hotel, HotelPhotos, Room, RoomPhotos
 class HotelAdmin(admin.ModelAdmin):
     list_display = ('name', 'city', 'address', 'number_of_stars')
     search_fields = ('name', )
-    list_filter = ('name', )
+    list_filter = ('name', 'city', 'number_of_stars')
 
 @admin.register(HotelPhotos)
 class HotelPhotosAdmin(admin.ModelAdmin):
