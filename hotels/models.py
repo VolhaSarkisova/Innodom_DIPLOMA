@@ -12,6 +12,8 @@ NUMBER_OF_STARS = (
 ROOM_CATEGORY = (
     ('Standard room', 'Standard room'),
     ('Improved room', 'Improved room'),
+    ('family room', 'family room'),
+    ('apartments', 'apartments'),
     ('Suite room', 'Suite room'),
     ('Deluxe room', 'Deluxe room'),
     ('Presidential suite', 'Presidential suite'),
