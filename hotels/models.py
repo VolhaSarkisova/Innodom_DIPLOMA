@@ -28,3 +28,18 @@ class Hotel(models.Model):
     class Meta:
         verbose_name_plural = 'Hotels'
         ordering = ['city', 'name']
+
+class HotelPhotos(models.Model):
+    hotel = models.ForeignKey(Hotel,
+                              on_delete=models.CASCADE,
+                              related_name="hotel_photos_hotel")
+    photo = models.ImageField(upload_to='hotel_photos',
+                              blank=True,
+                              null=True)
+
+    def __str__(self):
+        return self.hotel
+
+    class Meta:
+        verbose_name_plural = 'Photos of hotels'
+        ordering = ['hotel']
