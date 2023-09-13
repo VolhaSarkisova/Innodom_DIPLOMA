@@ -1,14 +1,14 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from hotels.models import Room
+from apps.hotels.models import Room
 
 
 class Reservation(models.Model):
     room = models.ForeignKey(Room,
                              on_delete=models.PROTECT,
                              related_name='reservation_room')
-    date = models.DateTimeField(blank=False,
+    date = models.DateField(blank=False,
                                 null=False)
     reserved = models.BooleanField(default=True)
     user = models.ForeignKey(User,
