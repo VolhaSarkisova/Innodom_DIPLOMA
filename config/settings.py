@@ -42,10 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #local apps
-    'countries.apps.CountriesConfig',
-    'hotels.apps.HotelsConfig',
-    'reviews.apps.ReviewsConfig',
-    'reservations.apps.ReservationsConfig',
+    'apps.countries.apps.CountriesConfig',
+    'apps.hotels.apps.HotelsConfig',
+    'apps.reviews.apps.ReviewsConfig',
+    'apps.reservations.apps.ReservationsConfig',
+    'apps.users.apps.UsersConfig',
+    #
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +66,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
