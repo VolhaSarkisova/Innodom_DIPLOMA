@@ -40,6 +40,11 @@ class Hotel(models.Model):
                                           help_text="Enter a number of stars",
                                           choices=NUMBER_OF_STARS,
                                           default=3)
+    description = models.TextField(max_length=3000,
+                                   verbose_name="Hotel description",
+                                   help_text="Enter a hotel description",
+                                   null=True,
+                                   blank=True)
     def __str__(self):
         return self.name
     class Meta:
@@ -55,7 +60,7 @@ class HotelPhotos(models.Model):
                               null=True)
 
     def __str__(self):
-        return self.hotel
+        return f'Hotel: {self.hotel} Photo: {self.photo}'
 
     class Meta:
         verbose_name_plural = 'Photos of hotels'
@@ -81,7 +86,11 @@ class Room(models.Model):
     currency = models.ForeignKey(Currency,
                                  on_delete=models.PROTECT,
                                  related_name='room_currency')
-
+    description = models.TextField(max_length=3000,
+                                   verbose_name="Room description",
+                                   help_text="Enter a room description",
+                                   null=True,
+                                   blank=True)
     def __str__(self):
         return f'{self.hotel}: {self.number}'
 
