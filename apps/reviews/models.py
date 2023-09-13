@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from hotels.models import Hotel
+from apps.hotels.models import Hotel
 
 GRADE = (
     (1, 1),
@@ -26,7 +26,7 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     moderation = models.BooleanField(default=False)
     def __str__(self):
-        return self.grade
+        return f'User:{self.user} | Grade: {self.grade} | DateTime: {self.created_at}'
     class Meta:
         verbose_name_plural = 'Reviews'
         ordering = ['-created_at']
