@@ -1,6 +1,6 @@
 from django.db import models
 
-from countries.models import City, Currency
+from apps.countries.models import City, Currency
 
 NUMBER_OF_STARS = (
     (1, 1),
@@ -58,10 +58,8 @@ class HotelPhotos(models.Model):
     photo = models.ImageField(upload_to='hotel_photos',
                               blank=True,
                               null=True)
-
     def __str__(self):
         return f'Hotel: {self.hotel} Photo: {self.photo}'
-
     class Meta:
         verbose_name_plural = 'Photos of hotels'
         ordering = ['hotel']
@@ -93,7 +91,6 @@ class Room(models.Model):
                                    blank=True)
     def __str__(self):
         return f'Hotel: {self.hotel} | Category: {self.category} | Number of seats: {self.number_of_seats} | Number: {self.number}'
-
     class Meta:
         verbose_name_plural = 'Rooms'
         ordering = ['hotel', 'number']
@@ -107,7 +104,6 @@ class RoomPhotos(models.Model):
                               null=True)
     def __str__(self):
         return f'Room: {self.room} Photo: {self.photo}'
-
     class Meta:
         verbose_name_plural = 'Photos of rooms'
         ordering = ['room']
