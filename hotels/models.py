@@ -86,3 +86,17 @@ class Room(models.Model):
     class Meta:
         verbose_name_plural = 'Rooms'
         ordering = ['hotel', 'number']
+
+class RoomPhotos(models.Model):
+    room = models.ForeignKey(Room,
+                             on_delete=models.CASCADE,
+                             related_name='room_photos_room')
+    photo = models.ImageField(upload_to='room_photos',
+                              blank=True,
+                              null=True)
+    def __str__(self):
+        return self.room
+
+    class Meta:
+        verbose_name_plural = 'Photos of rooms'
+        ordering = ['room']
