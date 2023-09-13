@@ -3,17 +3,17 @@ from django.db import models
 from countries.models import City, Currency
 
 NUMBER_OF_STARS = (
-    ('1', '1'),
-    ('2', '2'),
-    ('3', '3'),
-    ('4', '4'),
-    ('5', '5'),
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
 )
 ROOM_CATEGORY = (
     ('Standard room', 'Standard room'),
     ('Improved room', 'Improved room'),
-    ('family room', 'family room'),
-    ('apartments', 'apartments'),
+    ('Family room', 'Family room'),
+    ('Apartments', 'Apartments'),
     ('Suite room', 'Suite room'),
     ('Deluxe room', 'Deluxe room'),
     ('Presidential suite', 'Presidential suite'),
@@ -39,7 +39,7 @@ class Hotel(models.Model):
     number_of_stars = models.IntegerField(verbose_name="Number of stars",
                                           help_text="Enter a number of stars",
                                           choices=NUMBER_OF_STARS,
-                                          default='3')
+                                          default=3)
     def __str__(self):
         return self.name
     class Meta:
