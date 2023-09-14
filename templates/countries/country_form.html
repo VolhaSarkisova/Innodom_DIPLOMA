@@ -1,0 +1,8 @@
+<h3>Country Form</h3>
+<a href="{% url 'countries' %}"> Go back </a>
+<hr>
+<form method="POST" action="">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit">
+</form>
