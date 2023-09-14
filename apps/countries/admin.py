@@ -1,7 +1,5 @@
 from django.contrib import admin
-
-from countries.models import Country, City, Currency
-
+from apps.countries.models import Country, City, Currency
 
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
