@@ -1,10 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base/index.html' %}
+
+{% block title %}
+    Log in
+{% endblock %}
+
+{% block content %}
+<div class="pb-6 grid grid-cols-1 gap-4">
+    <div class="py-6 px-6 col-span-2 bg-gray-100">
+        <div class="grid grid-cols-1 gap-6">
+            {% for hotel_photo in hotel_photos %}
+            <div>
+                <a href="#">
+                    <div>
+                        <img src="{{ hotel_photo.photo.url }}" alt="#" class="rounded-t-xl">
+                    </div>
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <p class="text-gray-500">{{ hotel.description}}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="w-7/8  mx-auto text-center p-6 bg-gray-100 rounded-xl">
+            <form  method="GET">
+                <br><br>
+                <label>Тип: </label>
+                <input type="text" name="search-area" value="{{ search_room }}"><br><br>
+
+                <label>Дата заезда: </label>
+                <input type="date" name="search-date-start"><br><br>
+
+                <label>Дата выезда: </label>
+                <input type="date" name="search-date-end"><br><br>
+
+                <input class="my-6 py-3 px-8 text-lg text-center bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit" value="Search">
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="pb-6 grid grid-cols-1 gap-4">
+    <div class="py-6 px-6 col-span-2 bg-gray-100">
+        <div class="grid grid-cols-3 gap-6">
+            {% for room in rooms %}
+            <div>
+                <a href="{% url 'room' room.id %}">
+                    <div>
+                        <img src="{{ room.main_photo.url }}" alt="#" class="rounded-t-xl">
+                    </div>
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <a href="{% url 'room' room.id %}">{{ room.number }}</a>
+                        <p>{{ room.class }}</p>
+                        <p>{{ room.number_of_seats }}</p>
+                        <p>{{ room.price }} {{ room.currency }}</p><br>
+                        <a href="#" class="my-6 py-3 px-8 text-lg text-center bg-fuchsia-500 hover:bg-fuchsia-700 rounded-xl text-white">Reserve</a>
+                    </div>
+
+                </a>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
