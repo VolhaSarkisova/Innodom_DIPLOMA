@@ -10,7 +10,7 @@ from apps.countries.views import (
 )
 
 urlpatterns = [
-    path('countries/', CountryList.as_view(), name='countries'),
+    path('', CountryList.as_view(), name='countries'),
     # path('country-detail/<int:pk>/', CountryDetail.as_view(), name='country'),
     path('country-detail/<int:pk>/', country_detail, name='country'),
     path('country-create/', CountryCreate.as_view(), name='country_create'),

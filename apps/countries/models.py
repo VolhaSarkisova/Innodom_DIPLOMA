@@ -54,6 +54,11 @@ class City(models.Model):
     main_photo = models.ImageField(upload_to='city_photos',
                               blank=True,
                               null=True)
+    attractions = models.TextField(max_length=3000,
+                                   verbose_name="City attractions",
+                                   help_text="Enter a city attractions",
+                                   null=True,
+                                   blank=True)
     def __str__(self):
         return self.name
 
