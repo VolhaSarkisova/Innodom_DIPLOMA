@@ -1,5 +1,10 @@
 from django.contrib import admin
-from apps.hotels.models import Hotel, HotelPhotos, Room, RoomPhotos
+from apps.hotels.models import (
+    Hotel,
+    HotelPhotos,
+    Room,
+    RoomPhotos
+)
 
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
