@@ -55,7 +55,7 @@ def country_detail(request, pk):
 def city_detail(request, pk):
     city = get_object_or_404(City, pk=pk)
     hotels = Hotel.objects.filter(city=pk)
-    city_photos = CityPhotos.objects.filter(city=pk)
+    city_photos = CityPhotos.objects.filter(city=pk)[0:1]
 
     context = {
         'city': city,
@@ -63,11 +63,10 @@ def city_detail(request, pk):
         'city_photos': city_photos
     }
 
-
     search_hotel = request.GET.get('search-area') or ''
     if search_hotel:
         context['hotels'] = context['hotels'].filter(
-            name__icontains=search_hotel
+            number_of_stars__icontains=search_hotel
         )
 
     return render(request, 'countries/city_detail.html', context)
