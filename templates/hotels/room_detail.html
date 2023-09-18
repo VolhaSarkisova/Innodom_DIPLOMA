@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base/index.html' %}
+
+{% block title %}
+    Log in
+{% endblock %}
+
+{% block content %}
+<div class="pb-6 grid grid-cols-1 gap-4">
+    <div class="py-6 px-6 col-span-2 bg-gray-100">
+        <div class="grid grid-cols-1 gap-6">
+            {% for room_photo in room_photos %}
+            <div>
+                <a href="#">
+                    <div>
+                        <img src="{{ room_photo.photo.url }}" alt="#" class="rounded-t-xl " width="100%">
+                    </div>
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <p>{{ room.class }}</p>
+                        <p>{{ room.category }}</p>
+                        <p>{{ room.number_of_seats }}</p>
+                        <p>{{ room.price }} {{ room.currency }}</p>
+                        <h2>{{ room.description }}</h2>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
