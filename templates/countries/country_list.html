@@ -1,30 +1,39 @@
-{% if request.user.is_authenticated %}
-    <p>{{ request.user }}</p>
-    <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-    <a href="{% url 'login' %}">Login</a>
-{% endif %}
-<hr>
-<h1>Country list</h1>
-<a href="{% url 'country_create' %}">Add Country</a>
-<hr>
+{% extends 'base/index.html' %}
 
-<form method="GET">
-    <input type="text" name="search-area" value="{{ search_input }}">
-    <input type="submit" value="Search">
-</form>
-<table>
-    <tr>
-        <th>Country</th>
-    </tr>
-    {% for country in countries %}
-    <tr>
-        <td>{{ country.name }}</td>
-        <td><a href="{% url 'country' country.id %}">View</a></td>
-        <td><a href="{% url 'country_update' country.id %}">Edit</a></td>
-        <td><a href="{% url 'country_delete' country.id %}">Delete</a></td>
-    </tr>
-    {% empty %}
-        <h3>No items in list</h3>
-    {% endfor %}
-</table>
+{% block title %}
+    Log in
+{% endblock %}
+
+{% block content %}
+
+<div class="w-7/8 my-6 mx-auto text-center p-6 bg-gray-100 rounded-xl">
+<p class="text-lg my-6">Welcome to our website!</p>
+<p>Here you can book a hotel for your vacation. Plan your vacation, business trip or just travel with us!</p>
+<p>So, a trip is a trip, but let's learn a little more about the country you are going to:</p>
+    <form class="my-6" method="GET">
+        <input type="text" name="search-area" value="{{ search_input }}"><br>
+        <input class="my-6 py-3 px-8 text-lg text-center bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit" value="Search">
+    </form>
+</div>
+
+<div class="pb-6 grid grid-cols-1 gap-4">
+    <div class="py-6 px-6 col-span-2 bg-gray-100">
+        <div class="grid grid-cols-3 gap-6">
+            {% for country in countries %}
+            <div>
+                <a href="{% url 'country' country.id %}">
+                    <div>
+                        <img src="{{ country.main_photo.url }}" alt="#" class="rounded-t-xl">
+                    </div>
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2-xl">{{ country.name }}</h2>
+                        <p class="text-gray-500">{{ country.description }}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
