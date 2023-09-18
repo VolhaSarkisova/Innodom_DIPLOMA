@@ -15,7 +15,7 @@
                         <img src="{{ city_photo.photo.url }}" alt="#" class="rounded-t-xl">
                     </div>
                     <div class="p-6 bg-white rounded-b-xl">
-                        <p class="text-gray-500">{{ country.attractions}}</p>
+                        <p class="text-gray-500">{{ city.attractions}}</p>
                     </div>
                 </a>
             </div>
@@ -36,11 +36,13 @@
             {% for hotel in hotels %}
             <div>
                 <a href="{% url 'hotel' hotel.id %}">
-<!--                    <div>-->
-<!--                        <img src="{{ hotel.main_photo.url }}" alt="#" class="rounded-t-xl">-->
-<!--                    </div>-->
+                    <div>
+                        <img src="{{ hotel.main_photo.url }}" alt="#" class="rounded-t-xl">
+                    </div>
                     <div class="p-6 bg-white rounded-b-xl">
                         <h2 class="text-2-xl">{{ hotel.name }}</h2>
+                        <h2 class="text-gray-500">{{ hotel.address }}</h2>
+                        <h2 class="text-gray-500">Звезд: {{ hotel.number_of_stars }}</h2>
                     </div>
                 </a>
             </div>
