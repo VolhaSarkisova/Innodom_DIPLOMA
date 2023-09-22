@@ -9,14 +9,15 @@ class Reservation(models.Model):
                              on_delete=models.PROTECT,
                              related_name='reservation_room')
     date = models.DateField(blank=False,
-                                null=False)
-    reserved = models.BooleanField(default=True)
+                            null=False)
     user = models.ForeignKey(User,
                              on_delete=models.PROTECT,
                              related_name='reservation_user')
     comment = models.TextField(max_length=2000,
                                verbose_name='Booking comment',
-                               help_text='Enter a booking comment')
+                               help_text='Enter a booking comment',
+                               null=True,
+                               blank=True)
 
     def __str__(self):
         return f'The {self.user} has booked a {self.room} for a {self.date}'
