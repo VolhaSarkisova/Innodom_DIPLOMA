@@ -1,7 +1,7 @@
 {% extends 'base/index.html' %}
 
 {% block title %}
-    Log in
+    Countries
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,7 @@
 <p>Here you can book a hotel for your vacation. Plan your vacation, business trip or just travel with us!</p>
 <p>So, a trip is a trip, but let's learn a little more about the country you are going to:</p>
     <form class="my-6" method="GET">
+        <label>Country: </label>
         <input type="text" name="search-area" value="{{ search_input }}"><br>
         <input class="my-6 py-3 px-8 text-lg text-center bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit" value="Search">
     </form>
