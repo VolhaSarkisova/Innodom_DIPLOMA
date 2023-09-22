@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -33,6 +34,7 @@ class CountryList(LoginRequiredMixin, ListView):
 # class CountryDetail(LoginRequiredMixin, DetailView):
 #     model = Country
 #     context_object_name = 'country'
+@login_required()
 def country_detail(request, pk):
     country = get_object_or_404(Country, pk=pk)
     cities = City.objects.filter(country=pk)
@@ -52,6 +54,7 @@ def country_detail(request, pk):
 
     return render(request, 'countries/country_detail.html', context)
 
+@login_required()
 def city_detail(request, pk):
     city = get_object_or_404(City, pk=pk)
     hotels = Hotel.objects.filter(city=pk)
@@ -71,6 +74,7 @@ def city_detail(request, pk):
 
     return render(request, 'countries/city_detail.html', context)
 
+
 class CountryCreate(LoginRequiredMixin, CreateView):
     model = Country
     fields = '__all__'
@@ -81,11 +85,13 @@ class CountryCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super(CountryCreate, self).form_valid(form)
 
+
 class CountryUpdate(LoginRequiredMixin, UpdateView):
     model = Country
     fields = '__all__'
     success_url = reverse_lazy('countries')
     template_name = "countries/country_form.html"
+
 
 class CountryDelete(LoginRequiredMixin, DeleteView):
     model = Country
