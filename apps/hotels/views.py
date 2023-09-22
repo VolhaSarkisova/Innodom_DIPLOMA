@@ -1,12 +1,18 @@
-from datetime import timedelta, datetime, date
+from datetime import datetime, date
 
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from rest_framework.generics import get_object_or_404
-
-from apps.hotels.models import Hotel, Room, HotelPhotos, RoomPhotos
+from apps.hotels.models import (
+    Hotel,
+    Room,
+    HotelPhotos,
+    RoomPhotos
+)
+from apps.reservations.forms import ReservationCreateForm
 from apps.reservations.models import Reservation
 
-
+@login_required()
 def hotel_detail(request, pk):
     search_room = request.GET.get('search-area') or ''
     search_date_start = request.GET.get('search-date-start') or ''
@@ -24,22 +30,27 @@ def hotel_detail(request, pk):
         'reservations': reservations
     }
 
+    # if request.method == "POST":
+    #     print('111')
+    #     return redirect('test', date_start='2023-02-02', date_end=request.GET.get('search-date-end') )
+    # else:
     if search_date_start != '' and search_date_end != '':
-        if datetime.strptime(search_date_start, '%Y-%m-%d') <= datetime.strptime(str(search_date_end), '%Y-%m-%d'):
+        date_start = datetime.strptime(search_date_start, '%Y-%m-%d')
+        date_end = datetime.strptime(str(search_date_end), '%Y-%m-%d')
+        date_now = datetime.strptime(str(date.today()), '%Y-%m-%d')
+        if date_now <= date_start <= date_end:
             context['rooms'] = Room.objects.filter(hotel=pk)
-
             if search_room:
                 context['rooms'] = context['rooms'].filter(
                     number_of_seats__icontains=search_room
                 )
-
             context['reservations'] = Reservation.objects.filter(
-                date__range=(datetime.strptime(search_date_start, '%Y-%m-%d'), datetime.strptime(str(search_date_end), '%Y-%m-%d')))
+                date__range=(date_start, date_end))
             context['rooms'] = context['rooms'].exclude(
                 id__in=[reservation.room.id for reservation in context['reservations']])
-
     return render(request, 'hotels/hotel_detail.html', context)
 
+@login_required()
 def room_detail(request, pk):
     room = get_object_or_404(Room, pk=pk)
     room_photos = RoomPhotos.objects.filter(room=pk)
