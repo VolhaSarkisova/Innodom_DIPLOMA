@@ -1,11 +1,11 @@
 {% extends 'base/index.html' %}
 
 {% block title %}
-    Log in
+    {{ hotel.name }}
 {% endblock %}
 
 {% block content %}
-<div class="pb-6 grid grid-cols-1 gap-4">
+<div class="pb-6 grid grid-cols-1 gap-4" xmlns="http://www.w3.org/1999/html">
     <div class="py-6 px-6 col-span-2 bg-gray-100">
         <div class="grid grid-cols-1 gap-6">
             {% for hotel_photo in hotel_photos %}
@@ -15,6 +15,7 @@
                         <img src="{{ hotel_photo.photo.url }}" alt="#" class="rounded-t-xl">
                     </div>
                     <div class="p-6 bg-white rounded-b-xl">
+                        <h1 class="p-6 text-2xl text-center">{{ hotel.name }}</h1>
                         <p class="text-gray-500">{{ hotel.description}}</p>
                     </div>
                 </a>
@@ -24,13 +25,13 @@
         <div class="w-7/8  mx-auto text-center p-6 bg-gray-100 rounded-xl">
             <form  method="GET">
                 <br><br>
-                <label>Тип: </label>
+                <label>Room category: </label>
                 <input type="text" name="search-area" value="{{ search_room }}"><br><br>
 
-                <label>Дата заезда: </label>
+                <label>Сheck-in date: </label>
                 <input type="date" name="search-date-start"><br><br>
 
-                <label>Дата выезда: </label>
+                <label>Сheck-out date: </label>
                 <input type="date" name="search-date-end"><br><br>
 
                 <input class="my-6 py-3 px-8 text-lg text-center bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit" value="Search">
@@ -54,7 +55,11 @@
                         <p>{{ room.class }}</p>
                         <p>{{ room.number_of_seats }}</p>
                         <p>{{ room.price }} {{ room.currency }}</p><br>
-                        <a href="#" class="my-6 py-3 px-8 text-lg text-center bg-fuchsia-500 hover:bg-fuchsia-700 rounded-xl text-white">Reserve</a>
+                        <form method="POST" action="{% url 'reservation_detail' room.id request.GET.urlencode %}">
+                            {% csrf_token %}
+                            <button class="py-4 px-8 text-lg bg-fuchsia-500 hover:bg-fuchsia-700 rounded-xl text-white">Reserve</button>
+                        </form>
+<!--                        <a href="{% url 'reservation' room.id %}" class="my-6 py-3 px-8 text-lg text-center bg-fuchsia-500 hover:bg-fuchsia-700 rounded-xl text-white">Reserve</a>-->
                     </div>
 
                 </a>
