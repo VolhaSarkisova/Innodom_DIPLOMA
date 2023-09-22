@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base/index.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+
+{% block content %}
+    <div class="pb-6 grid grid-cols-1 gap-4">
+    <div class="py-6 px-6 col-span-2 bg-gray-100">
+        <div class="grid grid-cols-1 gap-6">
+            {% for reservation in reservations %}
+            <div>
+                <a href="#">
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h1 class="p-6 text-2xl text-center">{{ reservation.date }}</h1>
+                        <p class="text-gray-500">{{ reservation.room}}</p>
+                        {% if request.user.is_superuser == False %}
+                            <a href="{% url 'reservation_delete' reservation.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+                        {% else %}
+                        <p>User: {{ reservation.user }}</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
