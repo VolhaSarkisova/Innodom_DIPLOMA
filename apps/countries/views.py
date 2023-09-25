@@ -1,16 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView
 )
 from rest_framework.generics import get_object_or_404
-
 from apps.countries.models import Country, City, CountryPhotos, CityPhotos
 from apps.hotels.models import Hotel
 
@@ -31,9 +25,6 @@ class CountryList(LoginRequiredMixin, ListView):
         context['search-input'] = search_input
         return context
 
-# class CountryDetail(LoginRequiredMixin, DetailView):
-#     model = Country
-#     context_object_name = 'country'
 @login_required()
 def country_detail(request, pk):
     country = get_object_or_404(Country, pk=pk)
@@ -75,25 +66,3 @@ def city_detail(request, pk):
     return render(request, 'countries/city_detail.html', context)
 
 
-class CountryCreate(LoginRequiredMixin, CreateView):
-    model = Country
-    fields = '__all__'
-    success_url = reverse_lazy('countries')
-    template_name = "countries/country_form.html"
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(CountryCreate, self).form_valid(form)
-
-
-class CountryUpdate(LoginRequiredMixin, UpdateView):
-    model = Country
-    fields = '__all__'
-    success_url = reverse_lazy('countries')
-    template_name = "countries/country_form.html"
-
-
-class CountryDelete(LoginRequiredMixin, DeleteView):
-    model = Country
-    template_name = 'countries/country_delete.html'
-    success_url = reverse_lazy('countries')
