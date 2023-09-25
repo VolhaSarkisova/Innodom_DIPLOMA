@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base/index.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+
+{% block content %}
+    <h1 class="mb-6 text-3xl">{{ title }}</h1>
+    <div class="mt-12 px-12 py-12 bg-gray-100 rounded-xl">
+        <form method="POST" action="{% url 'review_update' review.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <p class="flex-2xl text-lg font-semibold">Отель: {{review.hotel}}</p>
+            <p class="flex-xl text-lg text-gray-500 ">Комментарий: {{review.comment}}</p>
+            <p class="flex-xl text-lg text-gray-500">Оценка: {{review.grade}}</p>
+            <p class="flex-xl text-lg text-gray-500">Пользователь: {{review.user}}</p>
+            <p class="flex-xl text-lg text-gray-500">Дата создания: {{review.created_at}}</p><br>
+            <div class="space-y-4">
+                {{ form.as_p }}
+            </div>
+
+            {% if form.errors or form.non_field_errors %}
+                <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
+
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button class="mt-8 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Подтвердить</button>
+        </form>
+    </div>
+{% endblock %}
