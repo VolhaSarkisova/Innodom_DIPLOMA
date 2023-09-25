@@ -87,7 +87,6 @@ def review_update(request, pk):
 
     context = {
         "form": form,
-        "title": "Модерация",
         "review": review,
     }
 
