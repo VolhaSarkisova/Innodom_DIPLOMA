@@ -1,7 +1,6 @@
 from datetime import datetime, date
-
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from rest_framework.generics import get_object_or_404
 from apps.hotels.models import (
     Hotel,
@@ -9,7 +8,6 @@ from apps.hotels.models import (
     HotelPhotos,
     RoomPhotos
 )
-from apps.reservations.forms import ReservationCreateForm
 from apps.reservations.models import Reservation
 
 @login_required()
@@ -30,10 +28,6 @@ def hotel_detail(request, pk):
         'reservations': reservations
     }
 
-    # if request.method == "POST":
-    #     print('111')
-    #     return redirect('test', date_start='2023-02-02', date_end=request.GET.get('search-date-end') )
-    # else:
     if search_date_start != '' and search_date_end != '':
         date_start = datetime.strptime(search_date_start, '%Y-%m-%d')
         date_end = datetime.strptime(str(search_date_end), '%Y-%m-%d')
