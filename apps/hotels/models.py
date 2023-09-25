@@ -54,6 +54,18 @@ class Hotel(models.Model):
     class Meta:
         verbose_name_plural = 'Hotels'
         ordering = ['city', 'name']
+    @property
+    def rating(self):
+        reviews = self.review_hotel.filter(moderation=True)
+        if reviews:
+            rating_sum = 0
+
+            for review in reviews:
+                rating_sum += review.grade
+
+            rating = rating_sum/reviews.count()
+            return round(rating, 1)
+        return 5
 
 class HotelPhotos(models.Model):
     hotel = models.ForeignKey(Hotel,
