@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base/index.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        {% if comments %}
+        <h2 class="mb-2 text-2xl font-semibold text-center"><a href="{% url 'review_create' hotel.id 0 %}" >Отель: {{ hotel.name }}</a></h2>
+        {% for comment in comments %}
+             {% if comment.is_parent %}
+                <p class="text-gray-500 font-semibold">Пользователь: {{ comment.user }} ({{ comment.created_at}}) Оценка: {{comment.grade}} </p>
+                    {% if reguest.user.is_superuser %}
+                        <a href="{% url 'review_create' hotel.id comment.id %}" >{{ comment.comment }}</a>
+                    {% else %}
+                        <p class="text-green-500">&nbsp; &nbsp; &nbsp; {{ comment.comment }}</p>
+                    {% endif %}
+
+             {% endif %}
+             {% for replies in comment.children %}
+                <h3>&nbsp; &nbsp; &nbsp; <b>{{ replies.user }} ({{ replies.created_at}}): </b> {{ replies.comment }}</h3>
+             {% endfor %}
+        {% endfor %}
+
+    {% else %}
+        <h2 class="p-6 text-2xl text-center">Здесь пока нет отзывов</h2>
+    {% endif %}
+    </div>
+
+{% endblock %}
