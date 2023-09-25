@@ -26,7 +26,7 @@ class HotelsFreeListAPIView(APIView):
             date_end = datetime.strptime(str(search_date_end), '%Y-%m-%d')
             date_now = datetime.strptime(str(date.today()), '%Y-%m-%d')
             if date_now <= date_start <= date_end:
-                reservations = reservations.filter(Q(date__range=(date_start, date_end)))
+                reservations = reservations.filter(date__range=(date_start, date_end))
                 rooms = rooms.exclude(id__in=[reservation.room.id for reservation in reservations])
                 hotels = hotels.filter(id__in=[room.hotel.id for room in rooms])
 
