@@ -41,8 +41,10 @@ def delete_user_reservation(request, pk):
 
 @login_required()
 def reservation_detail(request, pk, url):
-    date_start = datetime.strptime(url[(url.index('search-date-start')+len('search-date-start')+1):(url.index('search-date-start')+len('search-date-start')+1+10)], '%Y-%m-%d').date()
-    date_end = datetime.strptime(url[(url.index('search-date-end')+len('search-date-end')+1):(url.index('search-date-end')+len('search-date-end')+1+10)], '%Y-%m-%d').date()
+    date_start = datetime.strptime(url[(url.index('search-date-start')+len('search-date-start')+1):
+                                       (url.index('search-date-start')+len('search-date-start')+1+10)], '%Y-%m-%d').date()
+    date_end = datetime.strptime(url[(url.index('search-date-end')+len('search-date-end')+1):
+                                     (url.index('search-date-end')+len('search-date-end')+1+10)], '%Y-%m-%d').date()
 
     reserved = Reservation.objects.filter(date__range=(date_start, date_end))
     flag = True
