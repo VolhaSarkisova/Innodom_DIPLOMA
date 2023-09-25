@@ -15,11 +15,12 @@
                         <img src="{{ room_photo.photo.url }}" alt="#" class="rounded-t-xl " width="100%">
                     </div>
                     <div class="p-6 bg-white rounded-b-xl">
-                        <p>{{ room.class }}</p>
-                        <p>{{ room.category }}</p>
-                        <p>{{ room.number_of_seats }}</p>
-                        <p>{{ room.price }} {{ room.currency }}</p>
-                        <h2>{{ room.description }}</h2>
+                        <p>Категория: {{ room.category }}</p>
+                        <p>Количество мест: {{ room.number_of_seats }}</p>
+                        <p>Стоимость (сутки): {{ room.price }} {{ room.currency }}</p>
+                        {% if room.description %}
+                            <h2>Описание: {{ room.description }}</h2>
+                        {% endif %}
                     </div>
                 </a>
             </div>
