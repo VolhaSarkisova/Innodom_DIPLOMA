@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="pb-6 grid grid-cols-1 gap-4">
-    <div class="py-6 px-6 col-span-2 bg-gray-100">
+    <div class="py-6 px-6 my-6 col-span-2 bg-gray-100">
         <div class="grid grid-cols-1 gap-6">
             {% for city_photo in city_photos %}
             <div>
@@ -15,20 +15,24 @@
                         <img src="{{ city_photo.photo.url }}" alt="#" class="rounded-t-xl">
                     </div>
                     <div class="p-6 bg-white rounded-b-xl">
-                        <h1 class="p-6 text-2xl text-center">{{ city.name }}</h1>
+                        <h1 class="p-6 text-2xl text-center">Город: {{ city.name }}</h1>
                         <p class="text-gray-500">{{ city.attractions}}</p>
                     </div>
                 </a>
             </div>
             {% endfor %}
         </div>
+        {% if hotels %}
         <div class="w-7/8  mx-auto text-center p-6 bg-gray-100 rounded-xl">
             <form  method="GET">
-                <label>Hotel star rating: </label>
+                <label>Количество звёзд отеля: </label>
                 <input type="text" name="search-area" value="{{ search_hotel }}"><br>
-                <input class="my-6 py-3 px-8 text-lg text-center bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit" value="Search">
+                <input class="my-6 py-3 px-8 text-lg text-center bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit" value="Поиск">
             </form>
         </div>
+        {% else %}
+        <h1 class="p-6 text-2xl text-center">К сожалению, нет отелей для бронирования</h1>
+        {% endif %}
     </div>
 </div>
 
@@ -42,9 +46,11 @@
                         <img src="{{ hotel.main_photo.url }}" alt="#" class="rounded-t-xl">
                     </div>
                     <div class="p-6 bg-white rounded-b-xl">
-                        <h2 class="text-2-xl">{{ hotel.name }}</h2>
-                        <h2 class="text-gray-500">{{ hotel.address }}</h2>
-                        <h2 class="text-gray-500">Звезд: {{ hotel.number_of_stars }}</h2>
+                        <h2 class="text-2xl">Отель: {{ hotel.name }}</h2><br>
+                        <h2 class="text-gray-500">Адрес: {{ hotel.address }}</h2>
+                        <h2 class="text-gray-500">Звёзды: {{ hotel.number_of_stars }}</h2><br>
+                        <p>Рейтинг: {{hotel.rating}}</p>
+                        <a href="{% url 'hotel_reviews' hotel.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-fuchsia-500 text-white rounded-xl">Просмотреть отзывы</a>
                     </div>
                 </a>
             </div>
