@@ -6,17 +6,32 @@
 
 
 {% block content %}
-    <div class="pb-6 grid grid-cols-1 gap-4">
-    <div class="py-6 px-6 col-span-2 bg-gray-100">
-        <div class="grid grid-cols-1 gap-6">
+
+<div class="pb-6 grid grid-cols-1 gap-4">
+    <div class="py-6 px-6 my-6 col-span-2 bg-gray-100">
+        <h1 class="text-2xl text-center">Список ваших бронирований</h1>
+        <div class="w-7/8  mx-auto text-center p-6 bg-gray-100 rounded-xl">
+            <form  method="GET">
+                <br><br>
+                <label>Период c: </label>
+                <input type="date" name="search-date-start"><br><br>
+
+                <label>Период по: </label>
+                <input type="date" name="search-date-end"><br><br>
+
+                <input class="my-6 py-3 px-8 text-lg text-center bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit" value="Поиск">
+
+            </form>
+        </div>
+        <div class="grid grid-cols-2 gap-6">
             {% for reservation in reservations %}
             <div>
                 <a href="#">
-                    <div class="p-6 bg-white rounded-b-xl">
+                    <div class="p-6 bg-white rounded-xl">
                         <h1 class="p-6 text-2xl text-center">{{ reservation.date }}</h1>
                         <p class="text-gray-500">{{ reservation.room}}</p>
                         {% if request.user.is_superuser == False %}
-                            <a href="{% url 'reservation_delete' reservation.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+                            <a href="{% url 'reservation_delete' reservation.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Удалить</a>
                         {% else %}
                         <p>User: {{ reservation.user }}</p>
                         {% endif %}
@@ -25,7 +40,27 @@
             </div>
             {% endfor %}
         </div>
-
     </div>
 </div>
+{% if not request.user.is_superuser %}
+<div class="pb-6 grid grid-cols-1 gap-4">
+    <div class="py-6 px-6 col-span-2 bg-gray-100">
+        <h1 class="text-2xl text-center">Список отелей</h1>
+        {% if request.user.is_superuser == False %}
+        <div class="grid grid-cols-4 gap-6">
+            {% for hotel in hotels %}
+            <div>
+                <a href="#">
+                    <div class="p-6 bg-white rounded-xl">
+                        <p class="font-semibold text-2xl">{{ hotel.name }}</p>
+                        <a href="{% url 'review_create' hotel.id 0 %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-fuchsia-500 text-white rounded-xl">Ваш комментарий</a>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}
