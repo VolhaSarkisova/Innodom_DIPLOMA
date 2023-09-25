@@ -25,8 +25,23 @@ class Review(models.Model):
                              related_name='review_user')
     created_at = models.DateTimeField(auto_now_add=True)
     moderation = models.BooleanField(default=False)
+    parent = models.ForeignKey('self',
+                               on_delete=models.CASCADE,
+                               null=True,
+                               blank=True,
+                               related_name='replies')
     def __str__(self):
         return f'User:{self.user} | Grade: {self.grade} | DateTime: {self.created_at}'
     class Meta:
         verbose_name_plural = 'Reviews'
         ordering = ['-created_at']
+
+    @property
+    def children(self):
+        return Review.objects.filter(parent=self).reverse()
+
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True
+        return False
