@@ -1,5 +1,4 @@
 from django.urls import path
-
 from apps.reviews.views import (
     hotel_comments,
     review_delete,
