@@ -55,10 +55,12 @@
                         <p>Класс: {{ room.category }}</p>
                         <p>Количество мест: {{ room.number_of_seats }}</p>
                         <p>Стоимость (сутки): {{ room.price }} {{ room.currency }}</p><br>
+                        {% if not request.user.is_superuser %}
                         <form method="POST" action="{% url 'reservation_detail' room.id request.GET.urlencode %}">
                             {% csrf_token %}
                             <button class="py-4 px-8 text-lg bg-fuchsia-500 hover:bg-fuchsia-700 rounded-xl text-white">Забронировать</button>
                         </form>
+                        {% endif %}
 <!--                        <a href="{% url 'reservation' room.id %}" class="my-6 py-3 px-8 text-lg text-center bg-fuchsia-500 hover:bg-fuchsia-700 rounded-xl text-white">Reserve</a>-->
                     </div>
 
