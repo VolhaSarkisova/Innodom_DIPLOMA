@@ -1,9 +1,7 @@
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from rest_framework import status
 from rest_framework.generics import get_object_or_404
-
 from apps.hotels.models import Room, Hotel
 from apps.reservations.forms import ReservationCreateForm
 from apps.reservations.models import Reservation
@@ -43,7 +41,6 @@ def delete_user_reservation(request, pk):
 
 @login_required()
 def reservation_detail(request, pk, url):
-
     date_start = datetime.strptime(url[(url.index('search-date-start')+len('search-date-start')+1):(url.index('search-date-start')+len('search-date-start')+1+10)], '%Y-%m-%d').date()
     date_end = datetime.strptime(url[(url.index('search-date-end')+len('search-date-end')+1):(url.index('search-date-end')+len('search-date-end')+1+10)], '%Y-%m-%d').date()
 
@@ -66,7 +63,6 @@ def reservation_detail(request, pk, url):
             date += timedelta(days=1)
             reservation.save()
         return redirect("reservation_info", pk, date_start, date_end, 'successfully')
-        # redirect("user_reservations")
     else:
         return redirect("reservation_info", pk, date_start, date_end, 'booking error')
 
