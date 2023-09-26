@@ -23,8 +23,13 @@
             {% endfor %}
         </div>
         <div class="w-7/8  mx-auto text-center p-6 bg-gray-100 rounded-xl">
+
             <form  method="GET">
-                <br><br>
+                <br>
+                {% if not request.user.is_authenticated %}
+                    <p class="text-center text-red-500">Забронировать номер может только авторизованный пользователь</p>
+                {% endif %}
+                <br>
                 <label>Количество мест: </label>
                 <input type="text" name="search-area" value="{{ search_room }}"><br><br>
 
@@ -55,7 +60,8 @@
                         <p>Класс: {{ room.category }}</p>
                         <p>Количество мест: {{ room.number_of_seats }}</p>
                         <p>Стоимость (сутки): {{ room.price }} {{ room.currency }}</p><br>
-                        {% if not request.user.is_superuser %}
+
+                        {% if request.user.is_authenticated and not request.user.is_superuser %}
                         <form method="POST" action="{% url 'reservation_detail' room.id request.GET.urlencode %}">
                             {% csrf_token %}
                             <button class="py-4 px-8 text-lg bg-fuchsia-500 hover:bg-fuchsia-700 rounded-xl text-white">Забронировать</button>

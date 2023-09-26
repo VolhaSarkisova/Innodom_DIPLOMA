@@ -10,7 +10,7 @@ from apps.hotels.models import (
 )
 from apps.reservations.models import Reservation
 
-@login_required()
+# @login_required
 def hotel_detail(request, pk):
     search_room = request.GET.get('search-area') or ''
     search_date_start = request.GET.get('search-date-start') or ''
@@ -44,7 +44,7 @@ def hotel_detail(request, pk):
                 id__in=[reservation.room.id for reservation in context['reservations']])
     return render(request, 'hotels/hotel_detail.html', context)
 
-@login_required()
+# @login_required
 def room_detail(request, pk):
     room = get_object_or_404(Room, pk=pk)
     room_photos = RoomPhotos.objects.filter(room=pk)

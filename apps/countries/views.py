@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import (
     ListView,
@@ -8,15 +8,12 @@ from rest_framework.generics import get_object_or_404
 from apps.countries.models import Country, City, CountryPhotos, CityPhotos
 from apps.hotels.models import Hotel
 
-class CountryList(LoginRequiredMixin, ListView):
+class CountryList(ListView): #LoginRequiredMixin,
     model = Country
     context_object_name = 'countries'
     template_name = "countries/country_list.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['countries'] = context['countries'].filter(
-        #     user=self.request.user
-        # ).count()
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['countries'] = context['countries'].filter(
@@ -25,7 +22,7 @@ class CountryList(LoginRequiredMixin, ListView):
         context['search-input'] = search_input
         return context
 
-@login_required()
+# @login_required
 def country_detail(request, pk):
     country = get_object_or_404(Country, pk=pk)
     cities = City.objects.filter(country=pk)
@@ -45,7 +42,7 @@ def country_detail(request, pk):
 
     return render(request, 'countries/country_detail.html', context)
 
-@login_required()
+# @login_required
 def city_detail(request, pk):
     city = get_object_or_404(City, pk=pk)
     hotels = Hotel.objects.filter(city=pk)

@@ -51,7 +51,7 @@ def review_delete(request, hotel, parent, pk):
 
     return redirect("review_create", pk=hotel, parent=parent)
 
-@login_required()
+# @login_required
 def hotel_reviews(request, pk):
     hotel = get_object_or_404(Hotel, pk=pk)
     comments = Review.objects.filter(hotel=hotel, moderation=True)
