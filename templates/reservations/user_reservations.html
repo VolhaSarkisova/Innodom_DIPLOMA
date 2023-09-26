@@ -30,8 +30,10 @@
                     <div class="p-6 bg-white rounded-xl">
                         <h1 class="p-6 text-2xl text-center">{{ reservation.date }}</h1>
                         <p class="text-gray-500">{{ reservation.room}}</p>
-                        {% if request.user.is_superuser == False %}
-                            <a href="{% url 'reservation_delete' reservation.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Удалить</a>
+                        {% if not request.user.is_superuser %}
+                            {% if date_now <= reservation.date %}
+                                <a href="{% url 'reservation_delete' reservation.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Удалить</a>
+                            {% endif %}
                         {% else %}
                         <p>User: {{ reservation.user }}</p>
                         {% endif %}
@@ -46,9 +48,9 @@
 <div class="pb-6 grid grid-cols-1 gap-4">
     <div class="py-6 px-6 col-span-2 bg-gray-100">
         <h1 class="text-2xl text-center">Список отелей</h1>
-        {% if request.user.is_superuser == False %}
+
         <div class="grid grid-cols-4 gap-6">
-            {% for hotel in hotels %}
+            {% for hotel in hotels_past %}
             <div>
                 <a href="#">
                     <div class="p-6 bg-white rounded-xl">
@@ -59,7 +61,7 @@
             </div>
             {% endfor %}
         </div>
-        {% endif %}
+
     </div>
 </div>
 {% endif %}

@@ -1,5 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from rest_framework.generics import get_object_or_404
 from apps.hotels.models import Room, Hotel
@@ -25,9 +26,18 @@ def user_reservations(request):
     rooms = Room.objects.filter(id__in=[reservation.room.id for reservation in reservations])
     hotels = Hotel.objects.filter(id__in=[room.hotel.id for room in rooms])
 
+    hotels_past = None
+    if not request.user.is_superuser:
+        reservations_past = Reservation.objects.filter(
+            Q(date__lte=(date.today() - timedelta(days=1))) & Q(user=request.user))
+        rooms_past = Room.objects.filter(id__in=[reservation.room.id for reservation in reservations_past])
+        hotels_past = Hotel.objects.filter(id__in=[room.hotel.id for room in rooms_past])
+
     context = {
         'reservations': reservations,
         'hotels': hotels,
+        'hotels_past': hotels_past,
+        'date_now': date.today()
     }
     return render(request, "reservations/user_reservations.html", context)
 
