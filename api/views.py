@@ -14,9 +14,7 @@ from apps.reservations.models import Reservation
 class HotelsFreeListAPIView(APIView):
     # http://127.0.0.1:8010/api/free_hotels/?search-date-start=2023-09-22&search-date-end=2023-09-22
     def get(self, request: Request):
-        reservations = Reservation.objects.all()
-        rooms = Room.objects.all()
-        hotels = Hotel.objects.all()
+        hotels=None
 
         search_date_start = self.request.query_params.get('search-date-start')
         search_date_end = self.request.query_params.get('search-date-end')
@@ -26,6 +24,11 @@ class HotelsFreeListAPIView(APIView):
             date_end = datetime.strptime(str(search_date_end), '%Y-%m-%d')
             date_now = datetime.strptime(str(date.today()), '%Y-%m-%d')
             if date_now <= date_start <= date_end:
+
+                reservations = Reservation.objects.all()
+                rooms = Room.objects.all()
+                hotels = Hotel.objects.all()
+
                 reservations = reservations.filter(date__range=(date_start, date_end))
                 rooms = rooms.exclude(id__in=[reservation.room.id for reservation in reservations])
                 hotels = hotels.filter(id__in=[room.hotel.id for room in rooms])
@@ -38,9 +41,7 @@ class HotelsFreeListAPIView(APIView):
 class RoomsFreeListAPIView(APIView):
     # http://127.0.0.1:8010/api/free_rooms/?search-date-start=2023-10-22&search-date-end=2023-10-22&hotel=1
     def get(self, request: Request):
-        reservations = Reservation.objects.all()
-        rooms = Room.objects.all()
-
+        rooms = None
         hotel_id = self.request.query_params.get('hotel')
         search_date_start = self.request.query_params.get('search-date-start')
         search_date_end = self.request.query_params.get('search-date-end')
@@ -50,12 +51,13 @@ class RoomsFreeListAPIView(APIView):
             date_end = datetime.strptime(str(search_date_end), '%Y-%m-%d')
             date_now = datetime.strptime(str(date.today()), '%Y-%m-%d')
             if date_now <= date_start <= date_end:
+                rooms = Room.objects.all()
+                reservations = Reservation.objects.all()
                 reservations = reservations.filter(date__range=(date_start, date_end))
                 rooms = rooms.exclude(id__in=[reservation.room.id for reservation in reservations])
                 rooms = rooms.filter(hotel=hotel_id)
 
-        if rooms:
-            serializer = RoomSerializer(rooms, many=True)
+        serializer = RoomSerializer(rooms, many=True)
 
         return Response(serializer.data)
 
